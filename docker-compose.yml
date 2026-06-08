@@ -1,0 +1,13 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: demo-docker-api2:local
+    container_name: demo-docker-api2
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      PORT: 8080
+    ports:
+      - "5000:8080"
+    restart: unless-stopped
