@@ -119,6 +119,15 @@ app.MapPost("/db/notes", async (CreateNoteRequest request) =>
         reader.GetDateTime(2)));
 });
 app.MapGet("/version", () => "v1");
+app.MapGet("/debug", (IConfiguration config) =>
+{
+    return new
+    {
+        Env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+        Connection =
+            config.GetConnectionString("DefaultConnection") != null
+    };
+});
 app.Run();
 
 static string? ResolveDatabaseConnectionString(IConfiguration configuration)

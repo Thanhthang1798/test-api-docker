@@ -45,3 +45,16 @@ Build                 Container
 Image                    Run
 
 just build Image only, not run 
+
+
+docker compose up -d
+= Chạy lại container
+
+docker compose up --build -d
+= Build image mới rồi chạy container
+
+docker compose down
+= Tắt project
+
+docker compose down -v
+= Tắt project + xóa data volume
