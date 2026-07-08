@@ -58,7 +58,7 @@ app.MapGet("/health", async () =>
 {
     return Results.Ok(new { status = "ok", database = "not_configured" });  
 }); 
-app.MapGet("/version", () => "v1");
+app.MapGet("/version", () => "v1.01");
 app.MapGet("/debug", (IConfiguration config) =>
 {
     return new
