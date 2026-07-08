@@ -1,17 +1,25 @@
+using DemoDockerAPI2.Services;
+using DemoDockerAPI2.Options;
 using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDockerOptions(builder.Configuration);
 
 var databaseUrl = ResolveDatabaseConnectionString(builder.Configuration);
 if (!string.IsNullOrWhiteSpace(databaseUrl))
 {
     builder.Services.AddSingleton(new NpgsqlDataSourceBuilder(databaseUrl).Build());
 }
+
+builder.Services.AddScoped<IProductService, ProductService>();
+
 
 var app = builder.Build();
 
@@ -128,6 +136,8 @@ app.MapGet("/debug", (IConfiguration config) =>
             config.GetConnectionString("DefaultConnection") != null
     };
 });
+
+app.MapControllers();
 app.Run();
 
 static string? ResolveDatabaseConnectionString(IConfiguration configuration)
